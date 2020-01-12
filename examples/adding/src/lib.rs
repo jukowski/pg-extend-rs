@@ -10,6 +10,8 @@ extern crate pg_extern_attr;
 
 use pg_extend::pg_magic;
 use pg_extern_attr::pg_extern;
+use pg_extend::native::Array;
+use pg_extend::pg_alloc::PgAllocator;
 
 // This tells Postgres this library is a Postgres extension
 pg_magic!(version: pg_sys::PG_VERSION_NUM);
@@ -66,6 +68,20 @@ fn sum_float_array(arr: &[f32]) -> f32 {
 #[pg_extern]
 fn sum_double_array(arr: &[f64]) -> f64 {
     arr.iter().sum()
+}
+
+/// The pg_extern attribute wraps the function in the proper functions syntax for C extensions
+#[pg_extern]
+fn clone_int4(_alloc: &PgAllocator, value: i32) -> Array {
+    let result = vec![value, value];
+    Array::from_i32_slice(_alloc,result.as_slice())
+}
+
+/// The pg_extern attribute wraps the function in the proper functions syntax for C extensions
+#[pg_extern]
+fn clone_string(_alloc: &PgAllocator, value: String) -> Array {
+    let result = vec![value.clone(), value];
+    Array::from_string_slice(_alloc,result.as_slice())
 }
 
 #[cfg(test)]

@@ -1,6 +1,6 @@
 //! Postgres type definitions
 
-use crate::native::Text;
+use crate::native::{Text, Array};
 
 /// See https://www.postgresql.org/docs/11/xfunc-c.html#XFUNC-C-TYPE-TABLE
 ///
@@ -254,6 +254,16 @@ where
 impl PgTypeInfo for Text<'_> {
     fn pg_type() -> PgType {
         PgType::Text
+    }
+}
+
+impl PgTypeInfo for Array<'_> {
+    fn pg_type() -> PgType {
+        PgType::Int4
+    }
+
+    fn is_array() -> bool {
+        true
     }
 }
 

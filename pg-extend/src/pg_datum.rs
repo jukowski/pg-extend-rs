@@ -12,7 +12,7 @@ use std::marker::PhantomData;
 use std::os::raw::c_char;
 use std::ptr::NonNull;
 
-use crate::native::Text;
+use crate::native::{Text, Array};
 use crate::pg_alloc::{PgAllocated, PgAllocator};
 use crate::pg_bool;
 use crate::pg_sys::{self, Datum};
@@ -302,6 +302,13 @@ impl<'s> TryFromPgDatum<'s> for PgAllocated<'s, CString> {
 
 impl<'s> From<Text<'s>> for PgDatum<'s> {
     fn from(value: Text<'s>) -> Self {
+        let ptr = unsafe { value.into_ptr() };
+        PgDatum(Some(ptr as Datum), PhantomData)
+    }
+}
+
+impl<'s> From<Array<'s>> for PgDatum<'s> {
+    fn from(value: Array<'s>) -> Self {
         let ptr = unsafe { value.into_ptr() };
         PgDatum(Some(ptr as Datum), PhantomData)
     }

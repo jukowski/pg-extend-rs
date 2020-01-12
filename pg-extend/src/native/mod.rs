@@ -11,6 +11,8 @@
 
 mod text;
 mod varlena;
+mod array;
 
 pub use text::Text;
+pub use array::Array;
 pub(crate) use varlena::VarLenA;

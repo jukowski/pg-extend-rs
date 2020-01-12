@@ -164,3 +164,18 @@ fn test_sum_double_array() {
         assert_eq!(format!("{:.1}", col), "6.6".to_owned());
     });
 }
+
+#[test]
+fn test_clone_int4() {
+    test_in_db("adding", |mut conn| {
+        let result = conn
+            .query("select (clone_int4(42))[1] ", &[])
+            .expect("query failed");
+        assert_eq!(result.len(), 1);
+
+        let row = result.get(0).expect("no rows returned");
+        let col: i32 = row.get(0);
+
+        assert_eq!(format!("{}", col), "42".to_owned());
+    });
+}

@@ -11,5 +11,7 @@ pg_create_stmt_bin!(
     sum_small_array_pg_create_stmt,
     sum_big_array_pg_create_stmt,
     sum_float_array_pg_create_stmt,
-    sum_double_array_pg_create_stmt
+    sum_double_array_pg_create_stmt,
+    clone_int4_pg_create_stmt,
+    clone_string_pg_create_stmt
 );
