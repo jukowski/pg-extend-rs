@@ -101,7 +101,7 @@ tar -xf ${PG_TAR_PATH:?}
 
 cd postgresql-${PG_VERSION}
 ./configure --prefix=${PG_INSTALL_DIR} --with-pgport=${PG_PORT} --enable-cassert --without-readline
-make install
+make -j 4 install
 
 cd ${current_dir:?}
 ${PG_BIN_DIR}/postgres --version
