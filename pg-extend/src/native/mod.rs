@@ -13,4 +13,7 @@ mod text;
 mod varlena;
 
 pub use text::Text;
+mod large_object;
+pub use array::Array;
+pub use large_object::LargeObject;
 pub(crate) use varlena::VarLenA;
